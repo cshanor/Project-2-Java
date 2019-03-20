@@ -3,8 +3,10 @@ package com.revature.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,25 +32,40 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@ManyToMany
+	@ManyToMany(
+			fetch=FetchType.LAZY,
+			cascade={
+					CascadeType.PERSIST, CascadeType.DETACH,
+					CascadeType.MERGE, CascadeType.REFRESH
+			})
 	@JoinTable(
-			name="user-mail",
+			name="user_mail",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="mail_id")
 			)
 	private List<Mail> messages;
 	
-	@ManyToMany
+	@ManyToMany(
+			fetch=FetchType.LAZY,
+			cascade={
+					CascadeType.PERSIST, CascadeType.DETACH,
+					CascadeType.MERGE, CascadeType.REFRESH
+			})
 	@JoinTable(
-			name="user-tags",
+			name="user_tags",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="tag_id")
 			)
 	private List<Tag> tags;
 	
-	@ManyToMany
+	@ManyToMany(
+			fetch=FetchType.LAZY,
+			cascade={
+					CascadeType.PERSIST, CascadeType.DETACH,
+					CascadeType.MERGE, CascadeType.REFRESH
+			})
 	@JoinTable(
-			name="user-friends",
+			name="user_friends",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="friend_id")
 			)
