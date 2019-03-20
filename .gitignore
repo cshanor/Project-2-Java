@@ -129,3 +129,6 @@ yarn-error.log
 
 # User specific bazel settings
 .bazelrc.user
+
+# target folder
+target/
