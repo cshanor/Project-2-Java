@@ -32,6 +32,10 @@ public class Mail {
 	@Column(name="mail_status")
 	private String mail_status;
 	
+
+	@Column(name="mail_time")
+	private String mail_time;
+	
 	@ManyToMany(
 			fetch=FetchType.LAZY,
 			cascade={
