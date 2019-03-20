@@ -29,6 +29,9 @@ public class Mail {
 	@Column(name="mail_description")
 	private String mail_desc;
 	
+	@Column(name="mail_status")
+	private String mail_status;
+	
 	@ManyToMany(
 			fetch=FetchType.LAZY,
 			cascade={
