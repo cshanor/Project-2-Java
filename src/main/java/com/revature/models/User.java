@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,6 +32,10 @@ public class User {
 
 	@Column(name="password")
 	private String password;
+	
+	@OneToOne
+	@JoinColumn(name="profile_id")
+	private Profile profile_id;
 	
 	@ManyToMany(
 			fetch=FetchType.LAZY,
