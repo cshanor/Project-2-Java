@@ -36,6 +36,32 @@ public class Profile {
 	@Column(name="description")
 	private String desc;
 
+	public Profile() {
+		super();
+	}
+
+	public Profile(String first_name, String last_name, String alias, String slogan, int icon_id, String desc) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.alias = alias;
+		this.slogan = slogan;
+		this.icon_id = icon_id;
+		this.desc = desc;
+	}
+
+	public Profile(int profile_id, String first_name, String last_name, String alias, String slogan, int icon_id,
+			String desc) {
+		super();
+		this.profile_id = profile_id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.alias = alias;
+		this.slogan = slogan;
+		this.icon_id = icon_id;
+		this.desc = desc;
+	}
+
 	public int getProfile_id() {
 		return profile_id;
 	}
