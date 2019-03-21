@@ -3,8 +3,6 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - tracert repo1.maven.org
-      - traceroute repo1.maven.org
       - echo Build started on `date`
       - mvn install:install-file -Dfile=ojdbc7-11.2.0.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=11.2.0 -Dpackaging=jar
       - mvn test
