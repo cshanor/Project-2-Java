@@ -12,10 +12,10 @@ import com.revature.models.User;
 
 /**
  * This controller will help with communicating with any requests that pertains
- * to a user. /login will attempt to login a user. /register will attempt to
- * register a user
+ * to a user.
  * 
- * @Endpoint /user
+ * @Endpoint /user/login Will attempt to login a user
+ * @Endpoint /user/register Will attempt to register a user
  * 
  * @author Jose Rivera
  *
