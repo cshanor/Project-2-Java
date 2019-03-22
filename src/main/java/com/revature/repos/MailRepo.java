@@ -31,6 +31,7 @@ public class MailRepo {
 	
 	public Mail add(Mail newMail) {
 		Session s = factory.getCurrentSession();
+		s.save(newMail);
 		return newMail;
 	}
 	
