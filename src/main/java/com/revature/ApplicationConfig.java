@@ -13,6 +13,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 /**
  * ApplicationConfig to setup the controller without
  * any XML configuration. This will register a dispatch servlet
@@ -30,6 +31,7 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext container = new AnnotationConfigWebApplicationContext();
 		container.register(ApplicationConfig.class);
+
 
 		servletContext.addListener(new ContextLoaderListener(container));
 
