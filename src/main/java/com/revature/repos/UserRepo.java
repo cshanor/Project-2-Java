@@ -26,6 +26,15 @@ public class UserRepo {
 		
 	}
 	
+	
+	public User getByCredentials(String username, String password) {
+		Session s = factory.getCurrentSession();
+		User u = s.get(User.class, username);
+		if(!(password == u.getPassword())) return null;
+		return u; 
+		
+	}
+	
 	public User getById(int id) {
 		Session s = factory.getCurrentSession();
 		return s.get(User.class, id);
