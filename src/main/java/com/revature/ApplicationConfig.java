@@ -63,7 +63,7 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 	 * with @Bean to let Spring know to instantiate, configure, and initialize the
 	 * new object to be managed by the Spring container
 	 * 
-	 * @return A BasicDataSource used to configure the session
+	 * @return A BasicDataSource object used to configure the session
 	 */
 	@Bean
 	public BasicDataSource dataSource() {
@@ -95,7 +95,7 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 	 * to let Spring know to instantiate, configure, and initialize the new object
 	 * to be managed by the Spring container
 	 * 
-	 * @return A valid session factory
+	 * @return A valid sessionFactory
 	 */
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
@@ -132,7 +132,7 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
 		hibernateProperties.setProperty("hibernate.format_sql", "true");
-		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");
 		return hibernateProperties;
 	}
 }
