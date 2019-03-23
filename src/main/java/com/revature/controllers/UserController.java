@@ -16,8 +16,8 @@ import com.revature.services.UserService;
  * This controller will help with communicating with any requests that pertains
  * to a user.
  * 
- * @Endpoint /user/login Will attempt to login a user
- * @Endpoint /user/register Will attempt to register a user
+ * @Endpoint /user/auth Will attempt to login a user
+ * @Endpoint /user/add Will attempt to register a user
  * 
  * @author Jose Rivera
  *
