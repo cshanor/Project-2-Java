@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.models.User;
 import com.revature.repos.UserRepo;
+import com.revature.util.AesEncryptUtil;
 
 @Service
 public class UserService {
@@ -23,21 +24,29 @@ public class UserService {
 	
 	@Transactional(readOnly=true, isolation=Isolation.SERIALIZABLE)
 	public List<User> getAll() {
-		return userRepo.getAll();
+		List<User> users= userRepo.getAll();
+		for(User u : users) {
+			u.setPassword(AesEncryptUtil.decrypt(u.getPassword()));
+		}
+		return users;
 	}
 	
 	@Transactional(readOnly=true, isolation=Isolation.READ_COMMITTED)
 	public User getById(int id) {
-		return userRepo.getById(id);
+		User user = userRepo.getById(id);
+		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
+		return user;
 	}
 	
 	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRED)
 	public User add(User newUser) {
+		newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
 		return userRepo.add(newUser);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public User update(User updatedUser) {
+		updatedUser.setPassword(AesEncryptUtil.encrypt(updatedUser.getPassword()));
 		return userRepo.update(updatedUser);
 	}
 	
