@@ -47,7 +47,7 @@ public class UserController {
 	 *         logged in.
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User loginUser(@RequestBody User user) {
 
 		return null;
@@ -62,13 +62,8 @@ public class UserController {
 	 *         added to the database.
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User registerUser(@RequestBody User user) {
-
-		// Check the user that was sent in
-		if (user == null) {
-			return null;
-		}
 
 		// Send the user object through the service
 		return service.add(user);
