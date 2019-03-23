@@ -3,6 +3,7 @@ package com.revature.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,5 +68,13 @@ public class UserController {
 
 		// Send the user object through the service
 		return service.add(user);
+	}
+	
+	// TEST
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String test() {
+
+		return "This is a test";
 	}
 }
