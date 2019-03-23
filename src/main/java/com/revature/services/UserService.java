@@ -31,7 +31,7 @@ public class UserService {
 		return userRepo.getById(id);
 	}
 	
-	@Transactional(isolation=Isolation.READ_UNCOMMITTED, propagation=Propagation.REQUIRED)
+	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRED)
 	public User add(User newUser) {
 		return userRepo.add(newUser);
 	}

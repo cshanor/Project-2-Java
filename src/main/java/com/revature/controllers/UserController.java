@@ -1,8 +1,8 @@
 package com.revature.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.User;
+import com.revature.services.UserService;
 
 /**
  * This controller will help with communicating with any requests that pertains
@@ -22,16 +23,20 @@ import com.revature.models.User;
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user")
 public class UserController {
 
-	// Test
-	@ResponseStatus(HttpStatus.CREATED)
-	@GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
-	public String test() {
+	// Access to our user service
+	private UserService service;
 
-		System.out.println("in test()");
-		return "Hello, World";
+	/**
+	 * Constructor for the UserController. Autowired to our UserService object
+	 * 
+	 * @param userService
+	 */
+	@Autowired
+	public UserController(UserService userService) {
+		service = userService;
 	}
 
 	/**
@@ -43,7 +48,7 @@ public class UserController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public User loginUser(@RequestBody String[] credentials) {
+	public User loginUser(@RequestBody User user) {
 
 		return null;
 	}
@@ -58,8 +63,14 @@ public class UserController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public User registerUser(@RequestBody User registrationInfo) {
+	public User registerUser(@RequestBody User user) {
 
-		return null;
+		// Check the user that was sent in
+		if (user == null) {
+			return null;
+		}
+
+		// Send the user object through the service
+		return service.add(user);
 	}
 }
