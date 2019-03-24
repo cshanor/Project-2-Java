@@ -51,7 +51,7 @@ public class UserController {
 	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User loginUser(@RequestBody User user) {
 
-		return null;
+		return service.getByCredentials(user.getUsername(), user.getPassword());
 	}
 
 	/**
@@ -66,13 +66,12 @@ public class UserController {
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User registerUser(@RequestBody User user) {
 
-		// Send the user object through the service
 		return service.add(user);
 	}
 	
 	// TEST
 	@ResponseStatus(HttpStatus.CREATED)
-	@GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String test() {
 
 		return "This is a test";

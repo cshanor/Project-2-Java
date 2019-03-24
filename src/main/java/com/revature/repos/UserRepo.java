@@ -34,6 +34,7 @@ public class UserRepo {
 
 	public User getByCredentials(String username, String password) {
 		Session s = factory.getCurrentSession();
+
 		s.beginTransaction();
 
 		User u = null;
@@ -56,9 +57,7 @@ public class UserRepo {
 			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username
 					+ " PW: " + password);
 		}
-
 		return u;
-
 	}
 
 	public User getById(int id) {
