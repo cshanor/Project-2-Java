@@ -2,11 +2,14 @@ package com.revature.repos;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 
 import com.revature.models.User;
 
@@ -15,6 +18,8 @@ public class UserRepo {
 
 	private SessionFactory factory;
 
+	Logger log = Logger.getLogger(UserRepo.class);
+	
 	@Autowired
 	public UserRepo(SessionFactory factory) {
 		this.factory = factory;
@@ -29,8 +34,28 @@ public class UserRepo {
 	
 	public User getByCredentials(String username, String password) {
 		Session s = factory.getCurrentSession();
-		User u = s.get(User.class, username);
-		if(!(password == u.getPassword())) return null;
+		s.beginTransaction();
+		
+		User u = null;
+		log.info("\n Retrieving user by credentials. ");
+
+		// Potential cause for sequel injection? Quick check for most common SQL injection
+		// as in "; drop table users" 
+		if (username.contains(";")) u = null;
+		Query userQuery = s.createQuery("from Users u where u.username = :usrnm ", User.class);
+		userQuery.setParameter("usrnm", username);
+
+		
+		// getSingleResult() has the potential to throw a number of exceptions. 
+		try {
+		u = (User) userQuery.getSingleResult();
+		} catch (NoResultException nre) {
+			log.info("No User found with these credentials: UN: " + username + " PW: " + password);
+		} catch (Exception e) {
+			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username + " PW: " + password );
+		}
+		
+		
 		return u; 
 		
 	}
