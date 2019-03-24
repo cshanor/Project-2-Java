@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,8 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+
 /**
  * ApplicationConfig to setup the controller without any XML configuration. This
  * will register a dispatch servlet in order to communicate with the front end.
@@ -37,6 +40,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableTransactionManagement
 public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
+	//use this logger later for debugging if needed. REMOVE in production, or implement AOP logging.  
+	Logger log = Logger.getLogger(ApplicationConfig.class);
+	
 	/**
 	 * Spring MVC configuration without using XML configuration. Uses
 	 * WebApplicationInitializer to configure the dispatcher servlet
@@ -46,9 +52,12 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		log.info(    "+-----------------------------------------------------------------------------------------+"
+				+ "\n | In onStartup() before instantiation/ registry of AnnotationConfigWevApplicationContext. |"
+				+ "\n +-----------------------------------------------------------------------------------------+");
 		AnnotationConfigWebApplicationContext container = new AnnotationConfigWebApplicationContext();
 		container.register(ApplicationConfig.class);
-
+		
 		servletContext.addListener(new ContextLoaderListener(container));
 
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet",
