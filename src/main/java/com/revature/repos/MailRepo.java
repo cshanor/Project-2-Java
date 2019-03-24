@@ -2,8 +2,10 @@ package com.revature.repos;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +13,12 @@ import com.revature.models.Mail;
 
 @Repository
 public class MailRepo {
-
+	
+	
 	private SessionFactory factory;
+	
+	//use this logger later for debugging if needed. REMOVE in production, or implement AOP logging.  
+	Logger log = Logger.getLogger(MailRepo.class);
 	
 	@Autowired
 	public MailRepo(SessionFactory factory) {
