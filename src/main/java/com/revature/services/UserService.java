@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.models.Profile;
 import com.revature.models.User;
+import com.revature.repos.ProfileRepo;
 import com.revature.repos.UserRepo;
 import com.revature.util.AesEncryptUtil;
 
@@ -16,6 +18,12 @@ import com.revature.util.AesEncryptUtil;
 public class UserService {
 
 	private UserRepo userRepo;
+	private ProfileRepo profileRepo;
+	
+	@Autowired
+	public UserService(ProfileRepo profRepo) {
+		profileRepo = profRepo;
+	}
 
 	@Autowired
 	public UserService(UserRepo UserRepo) {
@@ -48,6 +56,9 @@ public class UserService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User add(User newUser) {
 		newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
+		Profile prof = new Profile();
+		profileRepo.add(prof);
+		newUser.setProfile_id(prof);
 		return userRepo.add(newUser);
 	}
 

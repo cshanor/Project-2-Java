@@ -120,6 +120,14 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+	
+	public Profile getProfile_id() {
+		return profile_id;
+	}
+
+	public void setProfile_id(Profile profile_id) {
+		this.profile_id = profile_id;
+	}
 
 	public void setUsername(String username) {
 		this.username = username;
