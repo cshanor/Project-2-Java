@@ -17,10 +17,13 @@ import com.revature.util.AesEncryptUtil;
 public class UserService {
 
 	private UserRepo userRepo;
+	private ProfileService profileService;
 
 	@Autowired
-	public UserService(UserRepo UserRepo) {
-		userRepo = UserRepo;
+	public UserService(UserRepo UserRepo, ProfileService profileService) {
+		this.userRepo = UserRepo;
+		this.profileService = profileService;
+		
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.SERIALIZABLE)
@@ -49,6 +52,9 @@ public class UserService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User add(User newUser) {
 		newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
+		Profile newProf = new Profile();
+		profileService.add(newProf);
+		newUser.setProfile_id(newProf);
 		return userRepo.add(newUser);
 	}
 
