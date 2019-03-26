@@ -93,7 +93,8 @@ public class UserController {
 
 	/**
 	 * Method to accept a GET request to retrieve the Friends List for the given user. 
-	 * Will accept a user object, which could be changed to just send a user id in future iterations. 
+	 * Will accept a user_id, which will be used to get the friends by user_is from the Junction Table
+	 * User_Friends
 	 * 
 	 * @return The current friends list, or null if the user was unable to be
 	 *         added to the database.
@@ -101,11 +102,12 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> getUserFriends(@RequestBody User user, HttpServletResponse resp) {
+		
 		List<User> friends = null; 
 		try { //Depending on the mapping of the list of objects, this try block may not be entirely necessary.  
-		 friends = service.getFriendsByUsername(user.getUser_id());
-		 PrintWriter out = resp.getWriter();		 
-		 out.print(friends);
+		 friends = service.getFriendsByUser_Id(user.getUser_id());
+//		 PrintWriter out = resp.getWriter();		 
+//		 out.print(friends);
 		 resp.setStatus(200);
 		 
 		} catch (Exception e) {
@@ -117,5 +119,41 @@ public class UserController {
 		
 		return friends;
 	}
+	
+	
+	/**
+	 * Method to accept a POST request to add a friend to the current user's Friends List. 
+	 * Will accept a user_id. 
+	 * 
+	 * @return The current friends list, or null if the user was unable to be
+	 *         added to the database.
+	 */
+		@ResponseStatus(HttpStatus.CREATED)
+		@PostMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> updateUserFriends(@RequestBody User newFriend, HttpServletResponse resp){
+			List <User> friends = null; 
+			//takes in a user to add, get that user by username from db. 
+			
+			//get that user's id, add that to the junction table. 
+			User u = 
+			
+			newFriend = service.getByUsername(newFriend.getUsername());
+			try {
+			friends = service.getFriendsByUser_Id();
+			PrintWriter out = resp.getWriter();
+			
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				resp.setStatus(500);
+				return null; 
+			}
+			
+			
+			return friends; 
+		}
+	
+	
+	
 	
 }

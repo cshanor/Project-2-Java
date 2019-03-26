@@ -91,6 +91,25 @@ public class UserRepo {
 		Session s = factory.getCurrentSession();
 		return s.get(User.class, id);
 	}
+	
+	public User getByUsername(String username) {
+		User u = null; 
+		Session s = factory.getCurrentSession();
+		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
+		userQuery.setParameter("usrnm", username);
+		try {
+			u = (User) userQuery.getSingleResult();
+		} catch (NoResultException nre) {
+			log.info("No User found with these credentials: UN: " + username);
+			return null;
+		} catch (Exception e) {
+			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username);
+			return null; 
+		}
+		return u;
+	}
+	
+	
 
 	public User add(User newUser) {
 		Session s = factory.getCurrentSession();
