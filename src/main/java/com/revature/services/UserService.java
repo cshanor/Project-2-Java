@@ -17,12 +17,6 @@ import com.revature.util.AesEncryptUtil;
 public class UserService {
 
 	private UserRepo userRepo;
-	private ProfileService profileService;
-	
-	@Autowired
-	public void setProfileService(ProfileService profService) {
-		profileService = profService;
-	}
 
 	@Autowired
 	public UserService(UserRepo UserRepo) {
@@ -55,9 +49,6 @@ public class UserService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User add(User newUser) {
 		newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
-		Profile prof = new Profile();
-		profileService.add(prof);
-		newUser.setProfile_id(prof);
 		return userRepo.add(newUser);
 	}
 
