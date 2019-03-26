@@ -1,6 +1,5 @@
 package com.revature.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,13 +22,13 @@ public class Tag {
 	
 	@Id
 	@Column(name="tag_id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="game_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tag_seq")
 	private int tag_id;
 	
 	@Column(name="tag_title")
 	private String tag_title;
 	
-	@Column(name="game_description")
+	@Column(name="tag_description")
 	private String tag_desc;
 	
 
