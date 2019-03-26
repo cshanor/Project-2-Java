@@ -53,13 +53,13 @@ public class UserController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public HttpServletResponse login (@RequestBody User user, HttpServletResponse resp) {
+	public User login (@RequestBody User user, HttpServletResponse resp) {
 		User authUser = service.getByCredentials(user.getUsername(), user.getPassword());
 		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(authUser));
 		resp.addHeader("User ID:", Integer.toString(authUser.getUser_id()));
 		resp.addHeader("UserName:", authUser.getUsername());
 		resp.addHeader("Profile ID:", Integer.toString(authUser.getProfile_id().getProfile_id()));
-		return resp;
+		return authUser;
 	}
 
 	/**
