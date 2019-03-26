@@ -129,17 +129,17 @@ public class UserController {
 	 *         added to the database.
 	 */
 		@ResponseStatus(HttpStatus.CREATED)
-		@PostMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<User> updateUserFriends(@RequestBody User newFriend, HttpServletResponse resp){
+		@PostMapping(value = "/friends/{newFriend}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> updateUserFriends(@RequestBody User user, HttpServletResponse resp){
 			List <User> friends = null; 
 			//takes in a user to add, get that user by username from db. 
 			
 			//get that user's id, add that to the junction table. 
-			User u = 
+			//User u = 
 			
-			newFriend = service.getByUsername(newFriend.getUsername());
+			//newFriend = service.getByUsername(newFriend.getUsername());
 			try {
-			friends = service.getFriendsByUser_Id();
+			//friends = service.getFriendsByUser_Id();
 			PrintWriter out = resp.getWriter();
 			
 			
