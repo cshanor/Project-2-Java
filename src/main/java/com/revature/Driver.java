@@ -1,9 +1,9 @@
 package com.revature;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import com.revature.models.Profile;
-import com.revature.models.User;
+import com.revature.repos.UserRepo;
 import com.revature.util.HibernateUtil;
 
 public class Driver {
@@ -20,6 +20,9 @@ public class Driver {
 //		User marco = new User("marcovr", "pass", prof);
 //		session.save(marco);
 //		session.getTransaction().commit();
+	
+	
+	
 	}
 
 }

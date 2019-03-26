@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.models.Profile;
 import com.revature.models.User;
 import com.revature.repos.UserRepo;
 import com.revature.util.AesEncryptUtil;
@@ -31,6 +30,27 @@ public class UserService {
 		}
 		return users;
 	}
+	
+	//---------------------------------------------------------------
+	// Brandon injection has occured here. The following code has been 
+	// injected into your class via Brandon. 
+	
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public List<User> getFriendsByUsername(int user_id){
+		List<User> friends = userRepo.getFriendsByUser_Id(user_id);
+		//Iterate thru the friends at this point and set all passwords to hidden,
+		//	masking them with the phrase *NoWayJose*
+		for(User u : friends) {
+			u.setPassword("*NoWayJose*");
+			
+		}
+		
+		
+		return friends; 
+	}
+	
+	
+	//--------------------------------------------------------------
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getById(int id) {

@@ -1,5 +1,8 @@
 package com.revature.controllers;
 
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,4 +87,35 @@ public class UserController {
 
 		return "This is a test";
 	}
+	
+	
+	
+
+	/**
+	 * Method to accept a GET request to retrieve the Friends List for the given user. 
+	 * Will accept a user object, which could be changed to just send a user id in future iterations. 
+	 * 
+	 * @return The current friends list, or null if the user was unable to be
+	 *         added to the database.
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getUserFriends(@RequestBody User user, HttpServletResponse resp) {
+		List<User> friends = null; 
+		try { //Depending on the mapping of the list of objects, this try block may not be entirely necessary.  
+		 friends = service.getFriendsByUsername(user.getUser_id());
+		 PrintWriter out = resp.getWriter();		 
+		 out.print(friends);
+		 resp.setStatus(200);
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+			resp.setStatus(500);
+		} 
+		
+		
+		
+		return friends;
+	}
+	
 }
