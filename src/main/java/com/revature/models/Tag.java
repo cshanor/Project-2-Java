@@ -23,11 +23,18 @@ public class Tag {
 	
 	@Id
 	@Column(name="tag_id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tag_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="game_seq")
 	private int tag_id;
 	
-	@Column(name="tag_name")
-	private String tag_name;
+	@Column(name="tag_title")
+	private String tag_title;
+	
+	@Column(name="game_description")
+	private String tag_desc;
+	
+
+	@Column(name="tag_twitch_id")
+	private int twitch_id;
 	
 	@ManyToMany(
 			fetch=FetchType.LAZY,
@@ -36,24 +43,32 @@ public class Tag {
 					CascadeType.MERGE, CascadeType.REFRESH
 			})
 	@JoinTable(
-			name="user_tags",
-			joinColumns=@JoinColumn(name="tag_id"),
+			name="user_mail",
+			joinColumns=@JoinColumn(name="mail_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id")
 			)
 	private List<User> subscribers;
-	
-	public void addSub(User subscriber) {
-		if(subscribers == null) subscribers = new ArrayList<>();
-		subscribers.add(subscriber);
-	}
 
-	public Tag(int tag_id, String tag_name, List<User> subscribers) {
+	public Tag(int tag_id, String tag_title, String tag_desc, int twitch_id, List<User> subscribers) {
 		super();
 		this.tag_id = tag_id;
-		this.tag_name = tag_name;
+		this.tag_title = tag_title;
+		this.tag_desc = tag_desc;
+		this.twitch_id = twitch_id;
 		this.subscribers = subscribers;
 	}
-	
+
+	public Tag(String tag_title, String tag_desc, int twitch_id) {
+		super();
+		this.tag_title = tag_title;
+		this.tag_desc = tag_desc;
+		this.twitch_id = twitch_id;
+	}
+
+	public Tag() {
+		super();
+	}
+
 	public int getTag_id() {
 		return tag_id;
 	}
@@ -62,12 +77,28 @@ public class Tag {
 		this.tag_id = tag_id;
 	}
 
-	public String getTag_name() {
-		return tag_name;
+	public String getTag_title() {
+		return tag_title;
 	}
 
-	public void setTag_name(String tag_name) {
-		this.tag_name = tag_name;
+	public void setTag_title(String tag_title) {
+		this.tag_title = tag_title;
+	}
+
+	public String getTag_desc() {
+		return tag_desc;
+	}
+
+	public void setTag_desc(String tag_desc) {
+		this.tag_desc = tag_desc;
+	}
+
+	public int getTwitch_id() {
+		return twitch_id;
+	}
+
+	public void setTwitch_id(int twitch_id) {
+		this.twitch_id = twitch_id;
 	}
 
 	public List<User> getSubscribers() {
@@ -78,15 +109,53 @@ public class Tag {
 		this.subscribers = subscribers;
 	}
 
-	public Tag(String tag_name) {
-		super();
-		this.tag_name = tag_name;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((subscribers == null) ? 0 : subscribers.hashCode());
+		result = prime * result + ((tag_desc == null) ? 0 : tag_desc.hashCode());
+		result = prime * result + tag_id;
+		result = prime * result + ((tag_title == null) ? 0 : tag_title.hashCode());
+		result = prime * result + twitch_id;
+		return result;
 	}
 
-	public Tag() {
-		super();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tag other = (Tag) obj;
+		if (subscribers == null) {
+			if (other.subscribers != null)
+				return false;
+		} else if (!subscribers.equals(other.subscribers))
+			return false;
+		if (tag_desc == null) {
+			if (other.tag_desc != null)
+				return false;
+		} else if (!tag_desc.equals(other.tag_desc))
+			return false;
+		if (tag_id != other.tag_id)
+			return false;
+		if (tag_title == null) {
+			if (other.tag_title != null)
+				return false;
+		} else if (!tag_title.equals(other.tag_title))
+			return false;
+		if (twitch_id != other.twitch_id)
+			return false;
+		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Tag [tag_id=" + tag_id + ", tag_title=" + tag_title + ", tag_desc=" + tag_desc + ", twitch_id="
+				+ twitch_id + ", subscribers=" + subscribers + "]";
+	}
 
 }
