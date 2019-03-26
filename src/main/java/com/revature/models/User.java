@@ -38,7 +38,7 @@ public class User {
 	private Profile profile_id;
 	
 	@ManyToMany(
-			fetch=FetchType.LAZY,
+			fetch=FetchType.EAGER,
 			cascade={
 					CascadeType.PERSIST, CascadeType.DETACH,
 					CascadeType.MERGE, CascadeType.REFRESH
@@ -51,7 +51,7 @@ public class User {
 	private List<Mail> messages;
 	
 	@ManyToMany(
-			fetch=FetchType.LAZY,
+			fetch=FetchType.EAGER,
 			cascade={
 					CascadeType.PERSIST, CascadeType.DETACH,
 					CascadeType.MERGE, CascadeType.REFRESH
@@ -64,7 +64,7 @@ public class User {
 	private List<Tag> tags;
 	
 	@ManyToMany(
-			fetch=FetchType.LAZY,
+			fetch=FetchType.EAGER,
 			cascade={
 					CascadeType.PERSIST, CascadeType.DETACH,
 					CascadeType.MERGE, CascadeType.REFRESH
