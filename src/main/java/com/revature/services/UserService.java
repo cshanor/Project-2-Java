@@ -20,7 +20,7 @@ public class UserService {
 	private ProfileService profileService;
 	
 	@Autowired
-	public UserService(ProfileService profService) {
+	public void setProfileService(ProfileService profService) {
 		profileService = profService;
 	}
 
