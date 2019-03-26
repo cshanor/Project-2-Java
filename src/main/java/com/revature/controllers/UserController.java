@@ -52,7 +52,7 @@ public class UserController {
 	 *         logged in.
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public HttpServletResponse login (@RequestBody User user, HttpServletResponse resp) {
 		User authUser = service.getByCredentials(user.getUsername(), user.getPassword());
 		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(authUser));
