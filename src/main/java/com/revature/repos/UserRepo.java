@@ -35,8 +35,6 @@ public class UserRepo {
 	public User getByCredentials(String username, String password) {
 		Session s = factory.getCurrentSession();
 
-		s.beginTransaction();
-
 		User u = null;
 		log.info("\n Retrieving user by credentials. ");
 
@@ -45,10 +43,11 @@ public class UserRepo {
 		// as in "; drop table users"
 		if (username.contains(";"))
 			u = null;
-		Query userQuery = s.createQuery("from Users u where u.username = :usrnm ", User.class);
+		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
 		userQuery.setParameter("usrnm", username);
 
 		// getSingleResult() has the potential to throw a number of exceptions.
+		
 		try {
 			u = (User) userQuery.getSingleResult();
 		} catch (NoResultException nre) {
@@ -56,7 +55,7 @@ public class UserRepo {
 		} catch (Exception e) {
 			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username
 					+ " PW: " + password);
-		}
+		}		
 		return u;
 	}
 

@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.User;
 import com.revature.services.UserService;
+import com.revature.util.JwtConfig;
+import com.revature.util.JwtGenerator;
 
 /**
  * This controller will help with communicating with any requests that pertains
@@ -37,7 +41,7 @@ public class UserController {
 	 */
 	@Autowired
 	public UserController(UserService userService) {
-		service = userService;
+		this.service = userService;
 	}
 
 	/**
@@ -49,9 +53,13 @@ public class UserController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public User loginUser(@RequestBody User user) {
-
-		return service.getByCredentials(user.getUsername(), user.getPassword());
+	public User login (@RequestBody User user, HttpServletResponse resp) {
+		//User user = service.getByCredentials(username, password);
+		service.getByCredentials(user.getUsername(), user.getPassword());
+		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(user));
+		resp.addHeader("Info", Integer.toString(user.getUser_id()));
+		resp.addHeader("UserName", user.getUsername());
+		return user;
 	}
 
 	/**
