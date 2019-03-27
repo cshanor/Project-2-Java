@@ -12,10 +12,9 @@ phases:
       - echo Build completed on `date`
       - mvn clean package
       - mv target/Project-Full-HP-1.0-SNAPSHOT.war Project-Full-HP-1.0-SNAPSHOT.war
-      - pwd
-      - ls
       - cd src/main/webapp/WEB-INF/Classes/
       - ls
+      - cat app.properties
 artifacts:
   files:
     - Project-Full-HP-1.0-SNAPSHOT.war
