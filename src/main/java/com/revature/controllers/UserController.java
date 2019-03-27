@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -129,8 +130,8 @@ public class UserController {
 	 *         added to the database.
 	 */
 		@ResponseStatus(HttpStatus.CREATED)
-		@PostMapping(value = "/friends/{newFriend}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<User> updateUserFriends(@RequestBody User user, HttpServletResponse resp){
+		@PostMapping(value = "/friends/{user_id}/{friend_username}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> updateUserFriends(@PathVariable("user_id") Integer user_id, @PathVariable("friend_username") String friend_username, HttpServletResponse resp){
 			List <User> friends = null; 
 			//takes in a user to add, get that user by username from db. 
 			
@@ -139,8 +140,8 @@ public class UserController {
 			
 			//newFriend = service.getByUsername(newFriend.getUsername());
 			try {
-			//friends = service.getFriendsByUser_Id();
-			PrintWriter out = resp.getWriter();
+			friends = service.getFriendsByUser_Id(user_id);
+			//PrintWriter out = resp.getWriter();
 			
 			
 			} catch (Exception e) {
