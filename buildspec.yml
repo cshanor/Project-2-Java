@@ -15,4 +15,4 @@ phases:
 artifacts:
   files:
     - Project-Full-HP-1.0-SNAPSHOT.war
-    - .ebextensions/**/*
+    - .ebextensions/**
