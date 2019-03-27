@@ -5,6 +5,7 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn install:install-file -Dfile=ojdbc7-11.2.0.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=11.2.0 -Dpackaging=jar
+      # Source the app.properties file from the S3 bucket
       - aws s3 cp s3://apppropertiesbucket/app.properties src/main/webapp/WEB-INF/Classes/
       - mvn test
   build:
@@ -12,8 +13,10 @@ phases:
       - echo Build completed on `date`
       - mvn clean package
       - mv target/Project-Full-HP-1.0-SNAPSHOT.war Project-Full-HP-1.0-SNAPSHOT.war
+      # cd into directory to check for app.properties
       - cd src/main/webapp/WEB-INF/Classes/
       - ls
+      # Print the contents of app.properties to make sure correct file was placed
       - cat app.properties
 artifacts:
   files:
