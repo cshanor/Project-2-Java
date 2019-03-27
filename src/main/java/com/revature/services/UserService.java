@@ -44,11 +44,10 @@ public class UserService {
 		List<User> friends = userRepo.getFriendsByUser_Id(user_id);
 		//Iterate thru the friends at this point and set all passwords to hidden,
 		//	masking them with the phrase *NoWayJose*
-		for(User u : friends) {
+		/*for(User u : friends) {
 			u.setPassword("*NoWayJose*");
 			
-		}
-		
+		}*/
 		
 		return friends; 
 	}

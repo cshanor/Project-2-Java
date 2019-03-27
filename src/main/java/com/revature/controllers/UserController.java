@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.dto.UpdateFriendsDTO;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import com.revature.util.JwtConfig;
@@ -105,10 +106,9 @@ public class UserController {
 	public List<User> getUserFriends(@RequestBody User user, HttpServletResponse resp) {
 		
 		List<User> friends = null; 
-		try { //Depending on the mapping of the list of objects, this try block may not be entirely necessary.  
+		try { 
 		 friends = service.getFriendsByUser_Id(user.getUser_id());
-//		 PrintWriter out = resp.getWriter();		 
-//		 out.print(friends);
+
 		 resp.setStatus(200);
 		 
 		} catch (Exception e) {
@@ -130,9 +130,11 @@ public class UserController {
 	 *         added to the database.
 	 */
 		@ResponseStatus(HttpStatus.CREATED)
-		@PostMapping(value = "/friends/{user_id}/{friend_username}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<User> updateUserFriends(@PathVariable("user_id") Integer user_id, @PathVariable("friend_username") String friend_username, HttpServletResponse resp){
+		@PostMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> updateUserFriends(@RequestBody UpdateFriendsDTO updateFriendsDTO, HttpServletResponse resp){
 			List <User> friends = null; 
+			User user = updateFriendsDTO.getUser();
+			String friend_username = updateFriendsDTO.getFriend_username();
 			//takes in a user to add, get that user by username from db. 
 			
 			//get that user's id, add that to the junction table. 
@@ -140,9 +142,23 @@ public class UserController {
 			
 			//newFriend = service.getByUsername(newFriend.getUsername());
 			try {
-			friends = service.getFriendsByUser_Id(user_id);
-			//PrintWriter out = resp.getWriter();
-			
+				//fill out the rest of the details about the 
+				user = service.getById(user.getUser_id());
+				
+				friends = service.getFriendsByUser_Id(user.getUser_id());
+				//get current friends, 
+				friends.add(service.getByUsername(friend_username));
+				//add friend to list. 
+				
+				//update the user's friends list entry into user_friends table user.user_id and friend_id <- (getByUsername.getUser_id())
+				service.update(user);
+				
+				//---------------------------------------------------
+				User friend = service.getByUsername(friend_username);
+				friend.addFriend(user);
+				service.update(friend);
+				
+				resp.setStatus(200);
 			
 			} catch (Exception e) {
 				e.printStackTrace();
