@@ -61,9 +61,9 @@ public class UserController {
 	public User login (@RequestBody User user, HttpServletResponse resp) {
 		User authUser = service.getByCredentials(user.getUsername(), user.getPassword());
 		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(authUser));
-		resp.addHeader("User ID:", Integer.toString(authUser.getUser_id()));
-		resp.addHeader("UserName:", authUser.getUsername());
-		resp.addHeader("Profile ID:", Integer.toString(authUser.getProfile_id().getProfile_id()));
+		resp.addHeader("User_ID", Integer.toString(authUser.getUser_id()));
+		resp.addHeader("Username", authUser.getUsername());
+		resp.addHeader("Profile_ID", Integer.toString(authUser.getProfile_id().getProfile_id()));
 		return authUser;
 	}
 

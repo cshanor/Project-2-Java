@@ -73,8 +73,8 @@ public class JwtFilter extends HttpFilter {
 	private void setAccessControlHeaders(HttpServletResponse resp) {
 		resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
-		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
+		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization, Username, User_ID, Profile_ID");
+		resp.setHeader("Access-Control-Expose-Headers", "Authorization, Username, User_ID, Profile_ID");
 	}
 
 }
