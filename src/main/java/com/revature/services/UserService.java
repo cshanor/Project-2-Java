@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -18,7 +19,8 @@ public class UserService {
 
 	private UserRepo userRepo;
 	private ProfileService profileService;
-
+	private Logger log = Logger.getLogger(UserService.class);
+	
 	@Autowired
 	public UserService(UserRepo UserRepo, ProfileService profileService) {
 		this.userRepo = UserRepo;
@@ -62,6 +64,8 @@ public class UserService {
 	public User getByUsername(String username) {
 		User user = userRepo.getByUsername(username);
 		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
+		if(user==null) {log.info("getByUsername(" + username + " ) came back null. " ); return new User();}
+		
 		return user;
 	}
 	//--------------------------------------------------------------
