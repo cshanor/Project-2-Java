@@ -31,6 +31,34 @@ public class UserRepo {
 		return s.createQuery("from Users", User.class).getResultList();
 
 	}
+	
+	
+	public List<User> getFriendsByUser_Id(int user_id){
+		Session s = factory.getCurrentSession();
+		List<User> friends = null;
+		
+		try {
+			//Target the junction table, where user_id = id of current user. 
+			//This has to be targeted differently, because the JunctionTable is defined
+			//Within the user class, so we cannot say "from User". 
+			// My reference for this code: https://www.objectdb.com/java/jpa/query/parameter
+			Query friendsQuery = s.createNativeQuery("Select * from USER_FRIENDS where user_id = ?", User.class);
+			
+			//If this does not work, use a standard sql "?" with position of "0" 
+			// as we did when using JDBC. The "?1" is 
+			// an Ordinal Parameter (?index) which comes from JPA.
+			
+			friends = friendsQuery.setParameter(0, user_id).getResultList();
+			
+		}catch(Exception e) {
+			log.info("Exception thrown in getFriends() in UserRepo while trying to get friends by User"); 
+			e.printStackTrace();
+		}
+		
+		
+		return friends;
+	}
+	
 
 	public User getByCredentials(String username, String password) {
 		Session s = factory.getCurrentSession();
@@ -63,6 +91,25 @@ public class UserRepo {
 		Session s = factory.getCurrentSession();
 		return s.get(User.class, id);
 	}
+	
+	public User getByUsername(String username) {
+		User u = null; 
+		Session s = factory.getCurrentSession();
+		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
+		userQuery.setParameter("usrnm", username);
+		try {
+			u = (User) userQuery.getSingleResult();
+		} catch (NoResultException nre) {
+			log.info("No User found with these credentials: UN: " + username);
+			return null;
+		} catch (Exception e) {
+			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username);
+			return null; 
+		}
+		return u;
+	}
+	
+	
 
 	public User add(User newUser) {
 		Session s = factory.getCurrentSession();
@@ -88,4 +135,7 @@ public class UserRepo {
 		s.delete(user);
 		return true;
 	}
+	
+	
+	
 }

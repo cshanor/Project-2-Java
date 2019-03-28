@@ -34,6 +34,37 @@ public class UserService {
 		}
 		return users;
 	}
+	
+	//---------------------------------------------------------------
+	// Brandon injection has occured here. The following code has been 
+	// injected into your class via Brandon. 
+	
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public List<User> getFriendsByUser_Id(int user_id){
+		List<User> friends = userRepo.getFriendsByUser_Id(user_id);
+		//Iterate thru the friends at this point and set all passwords to hidden,
+		//	masking them with the phrase *NoWayJose*
+		/*for(User u : friends) {
+			u.setPassword("*NoWayJose*");
+			
+		}*/
+		
+		return friends; 
+	}
+	/**Method needed to get a friend by the passed in username.
+	 * If a user wishes to add a friend to their friend's list, 
+	 * he must input that user's username. 
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public User getByUsername(String username) {
+		User user = userRepo.getByUsername(username);
+		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
+		return user;
+	}
+	//--------------------------------------------------------------
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getById(int id) {

@@ -52,7 +52,7 @@ public class ApplicationConfig implements WebMvcConfigurer, WebApplicationInitia
 	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		log.info("+-----------------------------------------------------------------------------------------+"
+		log.info( "\n +-----------------------------------------------------------------------------------------+"
 				+ "\n | In onStartup() before instantiation/ registry of AnnotationConfigWevApplicationContext. |"
 				+ "\n +-----------------------------------------------------------------------------------------+");
 		AnnotationConfigWebApplicationContext container = new AnnotationConfigWebApplicationContext();

@@ -28,6 +28,18 @@ public class Tag {
 	@Column(name = "tag_title")
 	private String tag_title;
 
+	@ManyToMany(
+			fetch=FetchType.LAZY,
+			cascade={
+					CascadeType.PERSIST, CascadeType.DETACH,
+					CascadeType.MERGE, CascadeType.REFRESH
+			})
+	@JoinTable(
+			name="user_mail",
+			joinColumns=@JoinColumn(name="mail_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+			)
+
 	@Column(name = "tag_twitch_id")
 	private int twitch_id;
 
@@ -36,18 +48,12 @@ public class Tag {
 	@JoinTable(name = "user_mail", joinColumns = @JoinColumn(name = "mail_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> subscribers;
 
-	public Tag(int tag_id, String tag_title, String tag_desc, int twitch_id, List<User> subscribers) {
+	public Tag(int tag_id, String tag_title, int twitch_id, int ig_id, List<User> subscribers) {
 		super();
 		this.tag_id = tag_id;
 		this.tag_title = tag_title;
 		this.twitch_id = twitch_id;
 		this.subscribers = subscribers;
-	}
-
-	public Tag(String tag_title, String tag_desc, int twitch_id) {
-		super();
-		this.tag_title = tag_title;
-		this.twitch_id = twitch_id;
 	}
 
 	public Tag() {
@@ -90,6 +96,7 @@ public class Tag {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ig_id;
 		result = prime * result + ((subscribers == null) ? 0 : subscribers.hashCode());
 		result = prime * result + tag_id;
 		result = prime * result + ((tag_title == null) ? 0 : tag_title.hashCode());
@@ -106,6 +113,8 @@ public class Tag {
 		if (getClass() != obj.getClass())
 			return false;
 		Tag other = (Tag) obj;
+		if (ig_id != other.ig_id)
+			return false;
 		if (subscribers == null) {
 			if (other.subscribers != null)
 				return false;
