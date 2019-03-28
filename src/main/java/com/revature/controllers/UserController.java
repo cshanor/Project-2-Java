@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +37,7 @@ import com.revature.util.JwtGenerator;
 @RequestMapping(value = "/user")
 public class UserController {
 
+	private static Logger log = Logger.getLogger(UserController.class); 
 	// Access to our user service
 	private UserService service;
 
@@ -133,7 +135,11 @@ public class UserController {
 		@PostMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		public List<User> updateUserFriends(@RequestBody UpdateFriendsDTO updateFriendsDTO, HttpServletResponse resp){
 			List <User> friends = null; 
-			User user = updateFriendsDTO.getUser();
+			log.info("======= Within updateUserFriends ====== \n "
+					+"\t RequestBody: UpdateFriendsDTO:  " + updateFriendsDTO);
+			User user = service.getById(updateFriendsDTO.getUser().getUser_id());
+			
+			
 			String friend_username = updateFriendsDTO.getFriend_username();
 			//takes in a user to add, get that user by username from db. 
 			

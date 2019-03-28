@@ -8,6 +8,23 @@ public class UpdateFriendsDTO {
 	
 	private String friend_username;
 	
+	
+	
+	
+	public UpdateFriendsDTO() {
+		super();
+	
+	}
+	
+	
+
+	public UpdateFriendsDTO(User user) {
+		super();
+		this.user = user;
+	}
+
+
+
 	public UpdateFriendsDTO(User user, String friend_username) {
 		this.user = user;
 		this.friend_username = friend_username;
@@ -58,6 +75,13 @@ public class UpdateFriendsDTO {
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "UpdateFriendsDTO [user=" + user + ", friend_username=" + friend_username + "]";
 	}
 
 
