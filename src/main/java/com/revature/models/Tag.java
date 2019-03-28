@@ -29,6 +29,12 @@ public class Tag {
 	@Column(name="tag_name")
 	private String tag_name;
 	
+	@Column(name = "tag_twitch_id")
+	private int twitch_id;
+	
+	@Column(name = "tag_ig_id")
+	private int ig_id;
+	
 	@ManyToMany(
 			fetch=FetchType.LAZY,
 			cascade={
