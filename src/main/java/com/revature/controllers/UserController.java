@@ -138,7 +138,7 @@ public class UserController {
 			log.info("======= Within updateUserFriends ====== \n "
 					+"\t RequestBody: UpdateFriendsDTO:  " + updateFriendsDTO);
 			User user = service.getById(updateFriendsDTO.getUser().getUser_id());
-			log.info("User value: " + user);
+			log.info("User value from DTO: " + user);
 			
 			String friend_username = updateFriendsDTO.getFriend_username();
 			//takes in a user to add, get that user by username from db. 
@@ -164,6 +164,7 @@ public class UserController {
 				//update the user's friends list entry into user_friends table user.user_id and friend_id <- (getByUsername.getUser_id())
 				log.info("Value of user before update: " + user);
 				//service.update(user); // Print the value returned from updating the user
+				//log.info("updatedUser: " + service.addFriend(user) );
 				log.info("updatedUser: " + service.update(user) );
 				//---------------------------------------------------
 		

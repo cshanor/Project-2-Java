@@ -97,7 +97,7 @@ public class UserRepo {
 	}
 	
 	public User getByUsername(String username) {
-		User u = new User(); 
+		 User u = null; 
 		Session s = factory.getCurrentSession();
 		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
 		userQuery.setParameter("usrnm", username);

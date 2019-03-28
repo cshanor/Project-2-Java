@@ -124,6 +124,19 @@ public class UserService {
 		updatedUser.setPassword(AesEncryptUtil.encrypt(updatedUser.getPassword()));
 		return userRepo.update(updatedUser);
 	}
+	
+	//-----------------------------------------------------------------------------
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public User addFriend(User updatedUser) {
+		updatedUser.setPassword(AesEncryptUtil.encrypt(updatedUser.getPassword()));
+		for(User friend: updatedUser.getFriends()) {
+			friend.setPassword(AesEncryptUtil.encrypt(friend.getPassword()));
+		}
+		return userRepo.update(updatedUser);
+	}
+	
+	//-----------------------------------------------------------------------------
 
 	@Transactional // default isolation = READ_UNCOMMITTED; default propagation = REQUIRED
 	public boolean delete(int id) {
