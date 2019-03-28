@@ -36,18 +36,12 @@ public class Tag {
 	@JoinTable(name = "user_mail", joinColumns = @JoinColumn(name = "mail_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> subscribers;
 
-	public Tag(int tag_id, String tag_title, String tag_desc, int twitch_id, List<User> subscribers) {
+	public Tag(int tag_id, String tag_title, int twitch_id, int ig_id, List<User> subscribers) {
 		super();
 		this.tag_id = tag_id;
 		this.tag_title = tag_title;
 		this.twitch_id = twitch_id;
 		this.subscribers = subscribers;
-	}
-
-	public Tag(String tag_title, String tag_desc, int twitch_id) {
-		super();
-		this.tag_title = tag_title;
-		this.twitch_id = twitch_id;
 	}
 
 	public Tag() {
