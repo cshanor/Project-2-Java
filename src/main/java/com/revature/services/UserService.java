@@ -94,7 +94,14 @@ public class UserService {
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByCredentials(String username, String password) {
+		
 		User user = userRepo.getByCredentials(username, password);
+		
+		// Check if the user was found
+		if(user == null) {
+			return null;
+		}
+		
 		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
 		return user;
 	}
