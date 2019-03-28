@@ -66,13 +66,7 @@ public class UserRepo {
 
 	public User add(User newUser) {
 		Session s = factory.getCurrentSession();
-		try {
-			s.save(newUser);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-
+		s.save(newUser);
 		return newUser;
 	}
 

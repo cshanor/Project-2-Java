@@ -55,13 +55,7 @@ public class UserService {
 		Profile newProf = new Profile();
 		profileService.add(newProf);
 		newUser.setProfile_id(newProf);
-		User u = null;
-		try {
-			u = userRepo.add(newUser);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return u;
+		return userRepo.add(newUser);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
