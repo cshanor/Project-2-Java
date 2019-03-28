@@ -31,6 +31,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * ApplicationConfig to setup the controller without any XML configuration. This
  * will register a dispatch servlet in order to communicate with the front end.
  * 
+ * 
  * @author Jose Rivera
  *
  */
