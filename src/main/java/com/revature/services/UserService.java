@@ -23,7 +23,7 @@ public class UserService {
 	public UserService(UserRepo UserRepo, ProfileService profileService) {
 		this.userRepo = UserRepo;
 		this.profileService = profileService;
-		
+
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.SERIALIZABLE)

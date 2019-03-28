@@ -16,24 +16,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TAGS")
-@SequenceGenerator(name="tag_seq", sequenceName="TAG_PK_SEQ", allocationSize=1)
+@Table(name = "TAGS")
+@SequenceGenerator(name = "tag_seq", sequenceName = "TAG_PK_SEQ", allocationSize = 1)
 public class Tag {
-	
+
 	@Id
-	@Column(name="tag_id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tag_seq")
+	@Column(name = "tag_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
 	private int tag_id;
-	
-	@Column(name="tag_title")
+
+	@Column(name = "tag_title")
 	private String tag_title;
-	
-	@Column(name="tag_twitch_id")
-	private int twitch_id;
-	
-	@Column(name = "tag_ig_id")
-	private int ig_id;
-	
+
 	@ManyToMany(
 			fetch=FetchType.LAZY,
 			cascade={
@@ -45,15 +39,20 @@ public class Tag {
 			joinColumns=@JoinColumn(name="mail_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id")
 			)
+
+	@Column(name = "tag_twitch_id")
+	private int twitch_id;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "user_mail", joinColumns = @JoinColumn(name = "mail_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> subscribers;
 
-	
 	public Tag(int tag_id, String tag_title, int twitch_id, int ig_id, List<User> subscribers) {
 		super();
 		this.tag_id = tag_id;
 		this.tag_title = tag_title;
 		this.twitch_id = twitch_id;
-		this.ig_id = ig_id;
 		this.subscribers = subscribers;
 	}
 
@@ -76,7 +75,6 @@ public class Tag {
 	public void setTag_title(String tag_title) {
 		this.tag_title = tag_title;
 	}
-
 
 	public int getTwitch_id() {
 		return twitch_id;
@@ -136,9 +134,7 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [tag_id=" + tag_id + ", tag_title=" + tag_title + ", twitch_id=" + twitch_id + ", ig_id=" + ig_id
-				+ ", subscribers=" + subscribers + "]";
+		return "Tag [tag_id=" + tag_id + ", tag_title=" + tag_title + ", twitch_id=" + twitch_id + ", subscribers="
+				+ subscribers + "]";
 	}
-
-	
 }

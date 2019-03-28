@@ -18,64 +18,40 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="USERS")
-@SequenceGenerator(name="user_seq", sequenceName="USER_PK_SEQ", allocationSize=1)
+@Table(name = "USERS")
+@SequenceGenerator(name = "user_seq", sequenceName = "USER_PK_SEQ", allocationSize = 1)
 public class User {
-	
+
 	@Id
-	@Column(name="user_id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_seq")
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
 	private int user_id;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
 
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
-	
+
 	@OneToOne
-	@JoinColumn(name="profile_id")
+	@JoinColumn(name = "profile_id")
 	private Profile profile_id;
-	
-	@ManyToMany(
-			fetch=FetchType.EAGER,
-			cascade={
-					CascadeType.PERSIST, CascadeType.DETACH,
-					CascadeType.MERGE, CascadeType.REFRESH
-			})
-	@JoinTable(
-			name="user_mail",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="mail_id")
-			)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "user_mail", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "mail_id"))
 	private List<Mail> messages;
-	
-	@ManyToMany(
-			fetch=FetchType.EAGER,
-			cascade={
-					CascadeType.PERSIST, CascadeType.DETACH,
-					CascadeType.MERGE, CascadeType.REFRESH
-			})
-	@JoinTable(
-			name="user_tags",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="tag_id")
-			)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private List<Tag> tags;
-	
-	@ManyToMany(
-			fetch=FetchType.EAGER,
-			cascade={
-					CascadeType.PERSIST, CascadeType.DETACH,
-					CascadeType.MERGE, CascadeType.REFRESH
-			})
-	@JoinTable(
-			name="user_friends",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="friend_id")
-			)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	private List<User> friends;
-	
+
 	public User() {
 		super();
 	}
@@ -93,19 +69,22 @@ public class User {
 		this.password = password;
 		this.profile_id = profile_id;
 	}
-	
+
 	public void addMail(Mail mail) {
-		if(messages == null) messages = new ArrayList<>();
+		if (messages == null)
+			messages = new ArrayList<>();
 		messages.add(mail);
 	}
-	
+
 	public void addTag(Tag tag) {
-		if(tags == null) tags = new ArrayList<>();
+		if (tags == null)
+			tags = new ArrayList<>();
 		tags.add(tag);
 	}
-	
+
 	public void addFriend(User friend) {
-		if(friends == null) friends = new ArrayList<>();
+		if (friends == null)
+			friends = new ArrayList<>();
 		friends.add(friend);
 	}
 
@@ -120,7 +99,7 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	public Profile getProfile_id() {
 		return profile_id;
 	}
@@ -222,7 +201,5 @@ public class User {
 		return "User [user_id=" + user_id + ", username=" + username + ", password=" + password + ", messages="
 				+ messages + ", tags=" + tags + ", friends=" + friends + "]";
 	}
-	
-	
 
 }
