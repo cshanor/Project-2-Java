@@ -63,15 +63,17 @@ public class UserRepo {
 	public User getByCredentials(String username, String password) {
 		Session s = factory.getCurrentSession();
 
-		User u = null;
+		User u = new User();
+		u.setUsername("*NoWayJose*");
+		u.setUser_id(0);
+		u.setPassword("password");
 		log.info("\n Retrieving user by credentials. ");
 
 		// Potential cause for sequel injection? Quick check for most common SQL
 		// injection
 		// as in "; drop table users"
-		if (username.contains(";"))
-			u = null;
-		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
+		if (!username.contains(";"));
+		{Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
 		userQuery.setParameter("usrnm", username);
 
 		// getSingleResult() has the potential to throw a number of exceptions.
@@ -84,6 +86,8 @@ public class UserRepo {
 			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username
 					+ " PW: " + password);
 		}
+		
+		}
 		return u;
 	}
 
@@ -93,18 +97,24 @@ public class UserRepo {
 	}
 	
 	public User getByUsername(String username) {
-		User u = null; 
+		User u = new User(); 
 		Session s = factory.getCurrentSession();
 		Query userQuery = s.createQuery("from User u where u.username = :usrnm ", User.class);
 		userQuery.setParameter("usrnm", username);
 		try {
+			log.info("Before getByUsername query. ");
 			u = (User) userQuery.getSingleResult();
+			if(u==null) {
+				log.info("No User found with given username: " + username);
+				return null;
+			}
+			log.info("After query: -------");
 		} catch (NoResultException nre) {
 			log.info("No User found with these credentials: UN: " + username);
-			return null;
+			return new User();
 		} catch (Exception e) {
 			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username);
-			return null; 
+			return new User(); 
 		}
 		return u;
 	}

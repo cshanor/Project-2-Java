@@ -66,8 +66,16 @@ public class UserService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByUsername(String username) {
 		User user = userRepo.getByUsername(username);
+		//if the user is returned null, break out of the method via return. 
+		if(user == null) return null;
+		//Do not try to access the password if the user is null.
+		//Doing so will cause a null pointer exception. 
+		// if(user.getPassword() == null) return new User(0,"EmptyUser","UsernotFound"); 
+		
+		//if the user is not null, decrypt their password. 
 		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
-		if(user==null) {log.info("getByUsername(" + username + " ) came back null. " ); return new User();}
+		
+		//if(user==null) {log.info("getByUsername(" + username + " ) came back null. " ); return new User();}
 		
 		return user;
 	}

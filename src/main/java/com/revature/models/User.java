@@ -27,7 +27,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
 	private int user_id;
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String username;
 
 	@Column(name = "password")
