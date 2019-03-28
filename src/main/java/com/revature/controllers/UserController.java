@@ -62,6 +62,13 @@ public class UserController {
 	@PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User login(@RequestBody User user, HttpServletResponse resp) {
 		User authUser = service.getByCredentials(user.getUsername(), user.getPassword());
+
+		// Check if the user was valid, if not return null
+		if (authUser == null) {
+			return null;
+		}
+
+		// Set the headers
 		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(authUser));
 		resp.addHeader("User_ID", Integer.toString(authUser.getUser_id()));
 		resp.addHeader("Username", authUser.getUsername());

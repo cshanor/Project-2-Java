@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,7 +20,7 @@ public class UserService {
 	private UserRepo userRepo;
 	private ProfileService profileService;
 	private Logger log = Logger.getLogger(UserService.class);
-	
+
 	@Autowired
 	public UserService(UserRepo UserRepo, ProfileService profileService) {
 		this.userRepo = UserRepo;
@@ -39,7 +38,7 @@ public class UserService {
 	}
 
 	// ---------------------------------------------------------------
-	// Brandon injection has occured here. The following code has been
+	// Brandon injection has occurred here. The following code has been
 	// injected into your class via Brandon.
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -65,18 +64,23 @@ public class UserService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByUsername(String username) {
+
 		User user = userRepo.getByUsername(username);
-		//if the user is returned null, break out of the method via return. 
-		if(user == null) return null;
-		//Do not try to access the password if the user is null.
-		//Doing so will cause a null pointer exception. 
-		// if(user.getPassword() == null) return new User(0,"EmptyUser","UsernotFound"); 
-		
-		//if the user is not null, decrypt their password. 
+
+		// if the user is returned null, break out of the method via return.
+		if (user == null)
+			return null;
+
+		// Do not try to access the password if the user is null.
+		// Doing so will cause a null pointer exception.
+		// if(user.getPassword() == null) return new User(0,"EmptyUser","UsernotFound");
+
+		// if the user is not null, decrypt their password.
 		user.setPassword(AesEncryptUtil.decrypt(user.getPassword()));
-		
-		//if(user==null) {log.info("getByUsername(" + username + " ) came back null. " ); return new User();}
-		
+
+		// if(user==null) {log.info("getByUsername(" + username + " ) came back null. "
+		// ); return new User();}
+
 		return user;
 	}
 	// --------------------------------------------------------------
@@ -98,23 +102,17 @@ public class UserService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User add(User newUser) {
 
-		// Check if the user is already in the data base
-		User u = this.getByUsername(newUser.getUsername());
-
-		// If the user didn't return as a null value, it already exists
-		try {
-			if (u != null) {
-				throw new SQLIntegrityConstraintViolationException();
-			} else {
-				newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
-				Profile newProf = new Profile();
-				profileService.add(newProf);
-				newUser.setProfile_id(newProf);
-			}
-		} catch (SQLIntegrityConstraintViolationException sicve) {
-			System.out.println(sicve.getMessage());
+		// Check for duplicate username before trying to add
+		if (isDuplicateUsername(newUser.getUsername()))
 			return null;
-		}
+
+		// Encrypt their password
+		newUser.setPassword(AesEncryptUtil.encrypt(newUser.getPassword()));
+		
+		// Create a basic profile for the user
+		Profile newProfile = new Profile();
+		profileService.add(newProfile);
+		newUser.setProfile_id(newProfile);
 
 		return userRepo.add(newUser);
 	}
@@ -130,4 +128,21 @@ public class UserService {
 		return userRepo.delete(id);
 	}
 
+	/**
+	 * Method to check for duplicate usernames. This method will only check for a
+	 * user with the same username that was passed in. This could be better
+	 * accomplished through the use of the UNIQUE constraint, but currently that
+	 * causes other issues.
+	 * 
+	 * @param username The username to check
+	 * @return True if the username exists, false if not
+	 */
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public boolean isDuplicateUsername(String username) {
+
+		if (userRepo.getByUsername(username) == null)
+			return false;
+
+		return true;
+	}
 }
