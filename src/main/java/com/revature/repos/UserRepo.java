@@ -130,10 +130,12 @@ public class UserRepo {
 	public User update(User updatedUser) {
 		Session s = factory.getCurrentSession();
 		User user = s.get(User.class, updatedUser.getUser_id());
-		if (user == null)
+		if (user == null) {
 			return null;
-		else
+		}else {
 			user = updatedUser;
+			s.saveOrUpdate(user);
+		}
 		return user;
 	}
 
