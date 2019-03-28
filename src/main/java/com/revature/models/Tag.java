@@ -28,14 +28,7 @@ public class Tag {
 	@Column(name="tag_title")
 	private String tag_title;
 	
-	@Column(name="tag_description")
-	private String tag_desc;
-	
-
 	@Column(name="tag_twitch_id")
-	private int twitch_id;
-	
-	@Column(name = "tag_twitch_id")
 	private int twitch_id;
 	
 	@Column(name = "tag_ig_id")
@@ -54,20 +47,14 @@ public class Tag {
 			)
 	private List<User> subscribers;
 
-	public Tag(int tag_id, String tag_title, String tag_desc, int twitch_id, List<User> subscribers) {
+	
+	public Tag(int tag_id, String tag_title, int twitch_id, int ig_id, List<User> subscribers) {
 		super();
 		this.tag_id = tag_id;
 		this.tag_title = tag_title;
-		this.tag_desc = tag_desc;
 		this.twitch_id = twitch_id;
+		this.ig_id = ig_id;
 		this.subscribers = subscribers;
-	}
-
-	public Tag(String tag_title, String tag_desc, int twitch_id) {
-		super();
-		this.tag_title = tag_title;
-		this.tag_desc = tag_desc;
-		this.twitch_id = twitch_id;
 	}
 
 	public Tag() {
@@ -90,13 +77,6 @@ public class Tag {
 		this.tag_title = tag_title;
 	}
 
-	public String getTag_desc() {
-		return tag_desc;
-	}
-
-	public void setTag_desc(String tag_desc) {
-		this.tag_desc = tag_desc;
-	}
 
 	public int getTwitch_id() {
 		return twitch_id;
@@ -118,8 +98,8 @@ public class Tag {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ig_id;
 		result = prime * result + ((subscribers == null) ? 0 : subscribers.hashCode());
-		result = prime * result + ((tag_desc == null) ? 0 : tag_desc.hashCode());
 		result = prime * result + tag_id;
 		result = prime * result + ((tag_title == null) ? 0 : tag_title.hashCode());
 		result = prime * result + twitch_id;
@@ -135,15 +115,12 @@ public class Tag {
 		if (getClass() != obj.getClass())
 			return false;
 		Tag other = (Tag) obj;
+		if (ig_id != other.ig_id)
+			return false;
 		if (subscribers == null) {
 			if (other.subscribers != null)
 				return false;
 		} else if (!subscribers.equals(other.subscribers))
-			return false;
-		if (tag_desc == null) {
-			if (other.tag_desc != null)
-				return false;
-		} else if (!tag_desc.equals(other.tag_desc))
 			return false;
 		if (tag_id != other.tag_id)
 			return false;
@@ -159,8 +136,9 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [tag_id=" + tag_id + ", tag_title=" + tag_title + ", tag_desc=" + tag_desc + ", twitch_id="
-				+ twitch_id + ", subscribers=" + subscribers + "]";
+		return "Tag [tag_id=" + tag_id + ", tag_title=" + tag_title + ", twitch_id=" + twitch_id + ", ig_id=" + ig_id
+				+ ", subscribers=" + subscribers + "]";
 	}
 
+	
 }
