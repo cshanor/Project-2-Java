@@ -23,7 +23,7 @@ public class UserService {
 	public UserService(UserRepo UserRepo, ProfileService profileService) {
 		this.userRepo = UserRepo;
 		this.profileService = profileService;
-		
+
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.SERIALIZABLE)
@@ -55,7 +55,13 @@ public class UserService {
 		Profile newProf = new Profile();
 		profileService.add(newProf);
 		newUser.setProfile_id(newProf);
-		return userRepo.add(newUser);
+		User u = null;
+		try {
+			u = userRepo.add(newUser);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return u;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

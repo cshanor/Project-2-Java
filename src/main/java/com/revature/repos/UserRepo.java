@@ -47,7 +47,7 @@ public class UserRepo {
 		userQuery.setParameter("usrnm", username);
 
 		// getSingleResult() has the potential to throw a number of exceptions.
-		
+
 		try {
 			u = (User) userQuery.getSingleResult();
 		} catch (NoResultException nre) {
@@ -55,7 +55,7 @@ public class UserRepo {
 		} catch (Exception e) {
 			log.info("Exception thrown in getByCredentials when invoked with these credentials: UN: " + username
 					+ " PW: " + password);
-		}		
+		}
 		return u;
 	}
 
@@ -66,7 +66,13 @@ public class UserRepo {
 
 	public User add(User newUser) {
 		Session s = factory.getCurrentSession();
-		s.save(newUser);
+		try {
+			s.save(newUser);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+
 		return newUser;
 	}
 
