@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -217,5 +218,24 @@ public class UserController {
 		
 		// Return the valid tag
 		return t;
+	}
+	
+	/**
+	 * Method to accept a POST request to return all the user's tags
+	 * 
+	 * @return A valid tag list, or null if no tag list is found
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping(value = "/tags/getforuser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Tag> subscribeToGame(@RequestBody int id) {
+		
+		User u = service.getById(id);
+		
+		if (u == null) {
+			return null;
+		}
+		
+		return u.getTags();
+		
 	}
 }
