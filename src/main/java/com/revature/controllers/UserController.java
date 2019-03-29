@@ -117,8 +117,17 @@ public class UserController {
 	}
 
 	/**
+	 * 
+	 * @author Brandon Morris
 	 * Method to accept a POST request to add a friend to the current user's Friends
 	 * List. Will accept a user_id.
+	 * 
+	 * @deprecated As of 2019.28.03. 
+	 * This feature abandoned to focus on other concerns.
+	 *  
+	 * @param Request Body. Takes in a data transfer object 
+	 * containing a User object and a String 
+	 * for the friend to add.  
 	 * 
 	 * @return The current friends list, or null if the user was unable to be added
 	 *         to the database.

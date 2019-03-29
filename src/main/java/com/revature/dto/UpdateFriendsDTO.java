@@ -2,6 +2,15 @@ package com.revature.dto;
 
 import com.revature.models.User;
 
+
+/**
+ * 
+ * @author Brandon Morris
+ * 
+ * Data Transfer object to assist
+ * in Request Handling. 
+ *
+ */
 public class UpdateFriendsDTO {
 
 	private User user;
