@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dto.UpdateFriendsDTO;
+import com.revature.models.Tag;
 import com.revature.models.User;
+import com.revature.services.TagService;
 import com.revature.services.UserService;
 import com.revature.util.JwtConfig;
 import com.revature.util.JwtGenerator;
@@ -29,6 +31,7 @@ import com.revature.util.JwtGenerator;
  * @Endpoint /user/add Will attempt to register a user
  * @Endpoint /user/friends GET will get the list of friends, POST will add a
  *           friend to the user's friends list
+ * @Endpoint /user/tags will GET the tags from the database
  * 
  * @author Jose Rivera
  *
@@ -38,17 +41,13 @@ import com.revature.util.JwtGenerator;
 public class UserController {
 
 	private static Logger log = Logger.getLogger(UserController.class);
-	// Access to our user service
 	private UserService service;
+	private TagService tagService;
 
-	/**
-	 * Constructor for the UserController. Autowired to our UserService object
-	 * 
-	 * @param userService
-	 */
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, TagService tagService) {
 		this.service = userService;
+		this.tagService = tagService;
 	}
 
 	/**
@@ -166,5 +165,31 @@ public class UserController {
 		}
 
 		return friends;
+	}
+
+	/**
+	 * Method to accept a GET request to receive all the tags that have been stored
+	 * in the database
+	 * 
+	 * @return A list of all the tags, or an empty list if no tags are found
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Tag> getTags() {
+
+		return tagService.getAll();
+	}
+
+	/**
+	 * Method to accept a POST request to receive an id to get the tag and add it to
+	 * the user's tag
+	 * 
+	 * @return A valid tag, or null if no tag is found
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping(value = "/tags/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Tag addTag(@RequestBody Integer id) {
+
+		return null;
 	}
 }

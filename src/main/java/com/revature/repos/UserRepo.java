@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.revature.models.Tag;
 import com.revature.models.User;
 
 @Repository
@@ -111,7 +112,7 @@ public class UserRepo {
 		s.save(newUser);
 		return newUser;
 	}
-
+	
 	public User update(User updatedUser) {
 		Session s = factory.getCurrentSession();
 		User user = s.get(User.class, updatedUser.getUser_id());
