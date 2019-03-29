@@ -21,6 +21,10 @@ public class ProfileService {
 		profileRepo = ProfileRepo;
 	}
 	
+	public ProfileService() {
+		super();
+	}
+
 	@Transactional(readOnly=true, isolation=Isolation.SERIALIZABLE)
 	public List<Profile> getAll() {
 		return profileRepo.getAll();

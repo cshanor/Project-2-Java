@@ -51,10 +51,15 @@ public class ProfileController {
 	 * @return The profile that was retrieved by id, or null if it could not be found.
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@GetMapping(value = "/get", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/get", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Profile GetProfile(@RequestBody int profileId, HttpServletResponse resp) {
 		Profile getProfile = service.getById(profileId);
-		resp.addHeader("profile", getProfile.toString());
+		resp.addHeader("first_name", getProfile.getFirst_name().toString());
+		resp.addHeader("last_name", getProfile.getLast_name().toString());
+		resp.addHeader("alias", getProfile.getAlias().toString());
+		resp.addHeader("slogan", getProfile.getSlogan().toString());
+		resp.addHeader("desc", getProfile.getDesc().toString());
+		resp.addHeader("icon_id", Integer.toString(getProfile.getIcon_id()));
 		return getProfile;
 	}
 
@@ -68,8 +73,8 @@ public class ProfileController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Profile registerUser(@RequestBody Profile profile) {
-
+	public Profile updateProfile(@RequestBody Profile profile) {
+		System.out.println("inside of java update profile, received profile is " + profile);
 		return service.update(profile);
 	}
 

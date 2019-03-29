@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dto.UpdateFriendsDTO;
+import com.revature.models.Profile;
 import com.revature.models.User;
+import com.revature.services.ProfileService;
 import com.revature.services.UserService;
 import com.revature.util.JwtConfig;
 import com.revature.util.JwtGenerator;
@@ -160,4 +162,5 @@ public class UserController {
 
 		return friends;
 	}
+	
 }
