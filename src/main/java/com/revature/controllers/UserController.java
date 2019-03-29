@@ -131,6 +131,7 @@ public class UserController {
 	 * @return The current friends list, or null if the user was unable to be
 	 *         added to the database.
 	 */
+	/*
 		@ResponseStatus(HttpStatus.CREATED)
 		@PostMapping(value = "/friends", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		public List<User> updateUserFriends(@RequestBody UpdateFriendsDTO updateFriendsDTO, HttpServletResponse resp){
@@ -183,7 +184,39 @@ public class UserController {
 			
 			return friends; 
 		}
+	*/
 	
+	
+	/**
+	 * 
+	 * @param user_id 
+	 * From the UI, a path variable will be passed in based on the
+	 * user id stored in the local storage. 
+	 * This will be used to get the friends by user_id. 
+	 * 
+	 * The request must have a JWT. 
+	 * 
+	 * 
+	 * 
+	 * @param resp
+	 * @return
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping(value = "/friends/{user_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getFriendsWithPathVariable(@PathVariable int user_id, HttpServletResponse resp){
+		List <User> friends = null; 
+		log.info("======= Within getFriendsWithPathVariable ====== ");
+		log.info("Given path variable value: " + user_id);
+		User u = service.getById(user_id);
+		log.info("User returned by service: " + u);
+		
+		friends = u.getFriends();
+	
+		resp.setStatus(200);
+		
+		
+		return friends; 
+	}
 	
 	
 	
