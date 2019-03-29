@@ -25,7 +25,7 @@ public class TagRepo {
 	
 	public List<Tag> getAll(){
 		Session s = factory.getCurrentSession();
-		return s.createQuery("from Tags", Tag.class).getResultList();
+		return s.createQuery("from Tag", Tag.class).getResultList();
 	}
 	
 	public Tag getById(int id) {

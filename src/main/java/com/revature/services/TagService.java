@@ -3,21 +3,22 @@ package com.revature.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.models.Profile;
 import com.revature.models.Tag;
 import com.revature.repos.TagRepo;
 
+@Service
 public class TagService {
 	
 private TagRepo tagRepo;
 	
 	@Autowired
 	public TagService(TagRepo TagRepo) {
-		tagRepo = TagRepo;
+		this.tagRepo = TagRepo;
 	}
 	
 	@Transactional(readOnly=true, isolation=Isolation.SERIALIZABLE)

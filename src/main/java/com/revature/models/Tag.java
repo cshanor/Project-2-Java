@@ -31,7 +31,7 @@ public class Tag {
 	@Column(name = "tag_twitch_id")
 	private int twitch_id;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinTable(name = "user_mail", joinColumns = @JoinColumn(name = "mail_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> subscribers;
