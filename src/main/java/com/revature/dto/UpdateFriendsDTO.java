@@ -9,6 +9,8 @@ import com.revature.models.User;
  * 
  * Data Transfer object to assist
  * in Request Handling. 
+ * This object is used to map the 
+ * request body to our pojos. 
  *
  */
 public class UpdateFriendsDTO {

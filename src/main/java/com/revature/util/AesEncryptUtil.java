@@ -9,6 +9,11 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * 
+ * @author Marco Van Rhyn
+ *
+ */
 public class AesEncryptUtil {
 	
 	 private static SecretKeySpec secretKey;

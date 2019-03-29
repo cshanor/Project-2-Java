@@ -14,6 +14,11 @@ import org.springframework.stereotype.Repository;
 import com.revature.models.Tag;
 import com.revature.models.User;
 
+/**
+ * 
+ * @author Brandon Morris
+ *
+ */
 @Repository
 public class UserRepo {
 

@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.models.Mail;
 
+
+/**
+ * 
+ * @author Brandon Morris
+ *
+ */
 @Repository
 public class MailRepo {
 	

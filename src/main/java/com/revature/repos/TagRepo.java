@@ -10,7 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.models.Tag;
 
-
+/**
+ * 
+ * @author Brandon Morris
+ *
+ */
 @Repository
 public class TagRepo {
 	

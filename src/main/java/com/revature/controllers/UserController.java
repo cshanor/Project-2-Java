@@ -34,6 +34,8 @@ import com.revature.util.JwtGenerator;
  * @Endpoint /user/tags will GET the tags from the database
  * 
  * @author Jose Rivera
+ * 
+ * @author Brandon Morris
  *
  */
 @RestController
