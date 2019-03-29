@@ -17,12 +17,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TAGS")
-@SequenceGenerator(name = "tag_seq", sequenceName = "TAG_PK_SEQ", allocationSize = 1)
+//@SequenceGenerator(name = "tag_seq", sequenceName = "TAG_PK_SEQ", allocationSize = 1)
 public class Tag {
 
 	@Id
 	@Column(name = "tag_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
 	private int tag_id;
 
 	@Column(name = "tag_title")

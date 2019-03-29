@@ -189,7 +189,7 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/tags/subscribe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Tag subscribeToGame(@RequestBody String[] ids) {
-
+		
 		int userId = Integer.parseInt(ids[0]);
 		int tagId = Integer.parseInt(ids[1]);
 		
