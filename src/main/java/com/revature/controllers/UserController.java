@@ -190,8 +190,8 @@ public class UserController {
 	@PostMapping(value = "/tags/subscribe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Tag subscribeToGame(@RequestBody String[] ids) {
 
-		int tagId = Integer.parseInt(ids[0]);
-		int userId = Integer.parseInt(ids[1]);
+		int userId = Integer.parseInt(ids[0]);
+		int tagId = Integer.parseInt(ids[1]);
 		
 		// Get the tag by id that the user requested
 		Tag t = tagService.getById(tagId);
