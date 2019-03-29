@@ -45,10 +45,11 @@ public class ProfileRepo {
 	
 	public Profile update(Profile updatedProfile) {
 		Session s = factory.getCurrentSession();
-		Profile profile = s.get(Profile.class, updatedProfile.getProfile_id());
-		if(profile == null) return null;
-		else profile = updatedProfile;
-		return profile;
+
+	if(updatedProfile == null) return null;
+	
+		s.saveOrUpdate(updatedProfile);
+		return updatedProfile;
 	}
 	
 	public boolean delete(int id) {

@@ -198,9 +198,35 @@ public class UserController {
 	 * @return A valid tag, or null if no tag is found
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/tags/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Tag addTag(@RequestBody Integer id) {
+	@PostMapping(value = "/tags/subscribe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Tag subscribeToGame(@RequestBody String[] ids) {
 
-		return null;
+		int userId = Integer.parseInt(ids[0]);
+		int tagId = Integer.parseInt(ids[1]);
+		
+		// Get the tag by id that the user requested
+		Tag t = tagService.getById(tagId);
+		
+		// Check if the tag is valid
+		if(t == null) {
+			return null;
+		}
+		
+		// Get the user that made the request by user id
+		User u = service.getById(userId);
+		
+		// Check if that user is valid
+		if(u == null) {
+			return null;
+		}
+		
+		// Add the tag to the list of user tags
+		u.getTags().add(t);
+		
+		// Update the user
+		service.update(u);
+		
+		// Return the valid tag
+		return t;
 	}
 }
