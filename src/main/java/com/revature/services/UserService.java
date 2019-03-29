@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.models.Profile;
-import com.revature.models.Tag;
 import com.revature.models.User;
 import com.revature.repos.UserRepo;
 import com.revature.util.AesEncryptUtil;
